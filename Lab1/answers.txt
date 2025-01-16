@@ -1,0 +1,56 @@
+E/20/280
+CO324 Lab 01
+
+1.
+a. What is the response code you received? [5]
+Status code is:  200
+
+b. What is the web server and OS used to host this site? Hint: look at the headers stored in response.headers.items(). [5]
+from headers, 'Server' 'Apache/2.4.52 (FreeBSD) OpenSSL/1.1.1d-freebsd PHP/7.4.26'
+Server: Apache/2.4.52
+OS: FreeBSD
+
+c. What is the size of the response body? [5]
+Response body size: 382826 bytes
+
+d. Read the response body into a variable named ‘body’. What is the Python type of the ‘body’ variable? [5]
+Type of 'body' variable:  <class 'bytes'>
+
+e. Explain why ‘body’ has that particular type with reference to the structure of HTTP responses. [5]
+HTTP response transmit data as raw bytes. so that developers can assign a type. so the body portion of the HTTP response is type byte.
+
+f. What happens if you request the URL “http://eng.pdn.ac.lk/unknown" ? What about  “http://unknown.pdn.ac.lk"? [5]
+http://eng.pdn.ac.lk/unknown : 'urllib.error.HTTPError: HTTP Error 404: Not Found' - since this is a valid domain, but does not exsist; therefore 404 error.
+http://unknown.pdn.ac.lk     : 'urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>' - url error sice domain is invalid. therefore request fails at DNS resolution stage.
+
+g. Request the following URL and store the response body in a variable ‘body’. https://ta.wikipedia.org/wiki/%E0%AE%9A%E0%AE%BF%E0%AE%99%E0%AF%8D%E0%AE%95%E0%AE%B3%E0%AE%AE%E0%AF%8D. Try printing the body data. [5]
+shows raw bytes and not properly encoded. therefore the response in unreadable. Specially since this contains tamil letters.
+
+h. What difference do you see  if you call the method .decode(“utf-8”) on the body data received in (g) before printing it? [5]
+when use correct character encording format(UTF-8) to decode, the response is readable due to propper decording of raw bytes
+
+
+2.
+i. Append the string “&format=json&pretty=1” to the search query. What difference do you see in the response? [5]
+without the additonal parameters, the response is raw HTML and not able to read directly
+but with the format parameters, it is converted to Json fromat. it is bit easier to read directly.
+
+j. Use request.urlopen to search for the phrase “Rocco's basilisk”. Hint: try it  in your browser first and look at the request URL carefully. [5]
+the request URL was     : 'https://www.bing.com/search?q=Rocco%27s+basilisk&FORM=HDRSC1'
+Here the search word is encorded as : 'Rocco%27s+basilisk' 
+
+k. What is URL encoding/decoding? Why is it necessary? [5]
+URL encording is converting characters into a format that could be safely transmitted.
+for example,in previous example the ' symbol was encorded as %27. so that the symbol will not be considered as a part of the command.
+URL decording is convertin that encoded format back to normal.
+
+l. How would you do a DDG search in Python for your name written in Tamil or Sinhala? Use this for Unicode input https://www.lexilogos.com/keyboard/. [5]
+first, coppied the name in 'Sinhala' from the given website
+then, encorded the string using, 'parse.quote('රවිදු')' and this was encorded as '%E0%B6%BB%E0%B7%80%E0%B7%92%E0%B6%AF%E0%B7%94'
+then included that in the URL and send the request. 
+
+3.
+
+a.
+b. 
+c. 

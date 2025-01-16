@@ -1,0 +1,59 @@
+
+Here are the answers to the questions from the lab instructions:
+
+1. (a) What do you see in the response when calling the API root endpoint https://api.github.com?
+The API root endpoint provides a JSON response that includes a
+list of URLs representing available endpoints for the GitHub REST API.
+It also contains metadata about the API, such as documentation URL and the current API version.
+
+1. (b) b. Get your Github profile information from the endpoint (replace username with your’s)
+https://api.github.com/users/username.
+
+The response contains details such as my username, ID, public repositories count, followers, and more.
+
+1. c. What is the purpose of the various X-Ratelimit- headers that you see in the response?
+
+In the X-Ratelimit-* headers provide information about API usage limits. Here, Key headers include:
+
+X-Ratelimit-Limit: The maximum number of requests allowed within the time window (also given).
+X-Ratelimit-Remaining: The number of remaining requests in the current time window.
+X-Ratelimit-Reset: The timestamp for when the rate limit resets.
+
+1. d. To access restricted operations via the API, you need to authenticate yourself first.
+Explain what effect the following code has at the HTTP protocol level, when a request is
+made using that session.
+
+* The Authorization heade sends the token with each request,enabling authentication. 
+* It allows access to restricted or user specific API operations that require authentication. 
+* All requests made using this session inherit the header,ensuring seamless authentication. 
+
+1. e. Use the session you created to create a repository owned by you by making a POST
+request to https://api.github.com/user/repos. Include the following request body, to create
+a repo named “test.” (Hint: use the json keyword argument when calling the method
+requests.post)
+
+repo was created in GitHub.
+
+
+2. a.Write a function called github_superstar that does the following
+
+2. b.Write code to watch the repo that wins github_superstars for
+https://github.com/cepdnaclk.
+
+lab\Lab3> pipenv run python ex2a.py
+GitHub Superstars: [('DeepSelectNet', 18), ('FlowChartGenerator', 12), ('HotelAppleBees-Database-Project', 6), ('e17-3yp-smart-apartment-security-system', 3), ('Matrix-Game', 1), ('Akilax0.github.io', 1), ('AkithaPathirana.github.io', 1), ('24-bit-map-colour-inverter', 1), ('e18-3yp-Corals-Protector', 1), ('directionApp', 1), ('19Kaumini', 0), ('AarahJF', 0), ('app-quz', 0), ('AchinthaSandakalum.github.io', 0), ('Achsu00', 0), ('aces-2022-main-site', 0), ('EDF-LMS', 0), ('AI-STORE-BACK-END', 0), ('akashwi', 0), ('e19-3yp-Project-Smart-Water-Tank', 0), ('amandasiriwardane', 0), ('aces-2022-main-site', 0), ('BootstrapGeneralizationBasic_GR', 0), ('people.ce.pdn.ac.lk', 0), ('AnjanaIllankoon', 0), ('e17-3yp-Healthy-Milk-Collecting-System', 0), ('people.ce.pdn.ac.lk', 0), ('first-git-test', 0)]
+
+2. c. Github has two versions of its API currently available: v3 and v4. How do you inform the
+API which version you want to use?
+
+Include the Accept header to specify the desired API version
+
+headers = {'Accept': 'application/vnd.github.v3+json'}
+response = requests.get('https://api.github.com', headers=headers)
+
+Use application/vnd.github.v3+json for v3 or application/vnd.github.graphql+json for v4.
+
+d. Explain the difference between the two API versions. Is one “better” than the other?
+Why?
+
+v4 is more efficient for complex data requirements, but v3 is simpler and widely supported.
