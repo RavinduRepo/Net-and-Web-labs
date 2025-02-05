@@ -7,6 +7,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import logging
+import threading
 from pprint import pformat
 from typing import Mapping, Sequence, Tuple
 
@@ -25,43 +26,78 @@ from google.protobuf import (
 from grpc import server, StatusCode
 import task_pb2, task_pb2_grpc
 
+# Define MAXLEN for task description
+MAXLEN = 1024
 
 class TaskapiImpl:
     def __init__(self, taskfile: str):
         self.taskfile = taskfile
         self.task_id = 0
+        self.tasks: Mapping[int, task_pb2.Task] = {}
+        self.lock = threading.Lock()
 
     def __enter__(self):
         """Load tasks from self.taskfile"""
-        with open(self.taskfile, mode="rb") as t:
-            tasklist = task_pb2.Tasks()
-            tasklist.ParseFromString(t.read())
-            logging.info(f"Loaded data from {self.taskfile}")
-            self.tasks: Mapping[int, task_pb2.Task] = #TODO
+        try:
+            with open(self.taskfile, mode="rb") as t:
+                tasklist = task_pb2.Tasks()
+                tasklist.ParseFromString(t.read())
+                self.tasks = {task.id: task for task in tasklist.pending}
+                self.task_id = max(self.tasks.keys(), default=0) + 1
+                logging.info(f"Loaded data from {self.taskfile}")
+        except FileNotFoundError:
+            self.tasks = {}
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Save tasks to self.taskfile"""
         with open(self.taskfile, mode="wb") as t:
-            tasks = #TODO
+            tasks = task_pb2.Tasks(pending=list(self.tasks.values()))
             t.write(tasks.SerializeToString())
             logging.info(f"Saved data to {self.taskfile}")
 
     def addTask(self, request: wrappers_pb2.StringValue, context) -> task_pb2.Task:
-        logging.debug(f"addTask parameters {pformat(request)}")
-        t = task_pb2.Task(id=self.task_id, description=request.value)
-        self.tasks[self.task_id] = t
-        self.task_id += 1
+        """Adds a new task, ensuring mutual exclusion."""
+        if len(request.value) > MAXLEN:
+            context.set_code(StatusCode.INVALID_ARGUMENT)
+            context.set_details("Task description exceeds 1024 characters.")
+            return task_pb2.Task()
+
+        with self.lock:
+            t = task_pb2.Task(id=self.task_id, description=request.value)
+            self.tasks[self.task_id] = t
+            self.task_id += 1
         return t
 
     def delTask(self, request: wrappers_pb2.UInt64Value, context) -> task_pb2.Task:
-        logging.debug(f"delTask parameters {pformat(request)}")
-        return self.tasks.pop(request.value)
+        """Deletes a task if it exists."""
+        if request.value not in self.tasks:
+            context.set_code(StatusCode.NOT_FOUND)
+            context.set_details("Task ID not found.")
+            return task_pb2.Task()
+
+        with self.lock:
+            return self.tasks.pop(request.value)
+
+    def editTask(self, request: task_pb2.Task, context) -> task_pb2.Task:
+        """Edits an existing task."""
+        if request.id not in self.tasks:
+            context.set_code(StatusCode.NOT_FOUND)
+            context.set_details("Task ID not found.")
+            return task_pb2.Task()
+
+        if len(request.description) > MAXLEN:
+            context.set_code(StatusCode.INVALID_ARGUMENT)
+            context.set_details("Task description exceeds 1024 characters.")
+            return task_pb2.Task()
+
+        with self.lock:
+            self.tasks[request.id].description = request.description
+        return self.tasks[request.id]
 
     def listTasks(self, request: empty_pb2.Empty, context) -> task_pb2.Tasks:
-        logging.debug(f"listTasks parameters {pformat(request)}")
-        return task_pb2.Tasks(pending=self.tasks.values())
-
+        """Lists all tasks."""
+        return task_pb2.Tasks(pending=list(self.tasks.values()))
 
 TASKFILE = "tasklist.protobuf"
 if __name__ == "__main__":

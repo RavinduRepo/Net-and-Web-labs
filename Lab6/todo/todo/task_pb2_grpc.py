@@ -5,7 +5,7 @@ import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
-from todo.todo import task_pb2 as todo_dot_todo_dot_task__pb2
+import task_pb2 as task__pb2
 
 GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__
@@ -20,7 +20,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in todo/todo/task_pb2_grpc.py depends on'
+        + f' but the generated code in task_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -40,22 +40,22 @@ class TaskapiStub(object):
         self.addTask = channel.unary_unary(
                 '/Taskapi/addTask',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
-                response_deserializer=todo_dot_todo_dot_task__pb2.Task.FromString,
+                response_deserializer=task__pb2.Task.FromString,
                 _registered_method=True)
         self.delTask = channel.unary_unary(
                 '/Taskapi/delTask',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.UInt64Value.SerializeToString,
-                response_deserializer=todo_dot_todo_dot_task__pb2.Task.FromString,
+                response_deserializer=task__pb2.Task.FromString,
                 _registered_method=True)
         self.editTask = channel.unary_unary(
                 '/Taskapi/editTask',
-                request_serializer=todo_dot_todo_dot_task__pb2.Task.SerializeToString,
-                response_deserializer=todo_dot_todo_dot_task__pb2.Task.FromString,
+                request_serializer=task__pb2.Task.SerializeToString,
+                response_deserializer=task__pb2.Task.FromString,
                 _registered_method=True)
         self.listTasks = channel.unary_unary(
                 '/Taskapi/listTasks',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=todo_dot_todo_dot_task__pb2.Tasks.FromString,
+                response_deserializer=task__pb2.Tasks.FromString,
                 _registered_method=True)
 
 
@@ -97,22 +97,22 @@ def add_TaskapiServicer_to_server(servicer, server):
             'addTask': grpc.unary_unary_rpc_method_handler(
                     servicer.addTask,
                     request_deserializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.FromString,
-                    response_serializer=todo_dot_todo_dot_task__pb2.Task.SerializeToString,
+                    response_serializer=task__pb2.Task.SerializeToString,
             ),
             'delTask': grpc.unary_unary_rpc_method_handler(
                     servicer.delTask,
                     request_deserializer=google_dot_protobuf_dot_wrappers__pb2.UInt64Value.FromString,
-                    response_serializer=todo_dot_todo_dot_task__pb2.Task.SerializeToString,
+                    response_serializer=task__pb2.Task.SerializeToString,
             ),
             'editTask': grpc.unary_unary_rpc_method_handler(
                     servicer.editTask,
-                    request_deserializer=todo_dot_todo_dot_task__pb2.Task.FromString,
-                    response_serializer=todo_dot_todo_dot_task__pb2.Task.SerializeToString,
+                    request_deserializer=task__pb2.Task.FromString,
+                    response_serializer=task__pb2.Task.SerializeToString,
             ),
             'listTasks': grpc.unary_unary_rpc_method_handler(
                     servicer.listTasks,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=todo_dot_todo_dot_task__pb2.Tasks.SerializeToString,
+                    response_serializer=task__pb2.Tasks.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -142,7 +142,7 @@ class Taskapi(object):
             target,
             '/Taskapi/addTask',
             google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
-            todo_dot_todo_dot_task__pb2.Task.FromString,
+            task__pb2.Task.FromString,
             options,
             channel_credentials,
             insecure,
@@ -169,7 +169,7 @@ class Taskapi(object):
             target,
             '/Taskapi/delTask',
             google_dot_protobuf_dot_wrappers__pb2.UInt64Value.SerializeToString,
-            todo_dot_todo_dot_task__pb2.Task.FromString,
+            task__pb2.Task.FromString,
             options,
             channel_credentials,
             insecure,
@@ -195,8 +195,8 @@ class Taskapi(object):
             request,
             target,
             '/Taskapi/editTask',
-            todo_dot_todo_dot_task__pb2.Task.SerializeToString,
-            todo_dot_todo_dot_task__pb2.Task.FromString,
+            task__pb2.Task.SerializeToString,
+            task__pb2.Task.FromString,
             options,
             channel_credentials,
             insecure,
@@ -223,7 +223,7 @@ class Taskapi(object):
             target,
             '/Taskapi/listTasks',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            todo_dot_todo_dot_task__pb2.Tasks.FromString,
+            task__pb2.Tasks.FromString,
             options,
             channel_credentials,
             insecure,
