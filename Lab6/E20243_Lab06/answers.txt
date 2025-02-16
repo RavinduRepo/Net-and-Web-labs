@@ -1,0 +1,6 @@
+E/20/243
+
+e. Can a task ever make an illegal transition due to a race condition during update? Explain why (not.)
+
+Yes, a race condition can cause an illegal state transition if multiple threads update the same task at the same time.
+For that we can implement thread-safety mechanisms like locks to ensure state consistency.

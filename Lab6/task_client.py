@@ -35,7 +35,7 @@ def test_add(stub, count) -> Mapping[int, str]:
 
 # Test that will be used to grade listTask
 def test_list(stub, tasks: Mapping[int, str]) -> None:
-    tasklist: task_pb2.Tasks = stub.listTasks(empty_pb2.Empty())
+    tasklist: task_pb2.Tasks = stub.listTasks(task_pb2.TaskQuery(selected=[]))
     for t in tasklist.pending:
         logging.debug(f"Task {pformat(t)}")
         # Is the proper task desc is returned for this id?

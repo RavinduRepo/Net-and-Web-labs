@@ -34,17 +34,21 @@ from google.protobuf import type_pb2 as google_dot_protobuf_dot_type__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ntask.proto\x1a\x19google/protobuf/any.proto\x1a\x19google/protobuf/api.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a$google/protobuf/source_context.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/protobuf/type.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\'\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\"\x1f\n\x05Tasks\x12\x16\n\x07pending\x18\x01 \x03(\x0b\x32\x05.Task2\xb0\x01\n\x07Taskapi\x12.\n\x07\x61\x64\x64Task\x12\x1c.google.protobuf.StringValue\x1a\x05.Task\x12.\n\x07\x64\x65lTask\x12\x1c.google.protobuf.UInt64Value\x1a\x05.Task\x12\x18\n\x08\x65\x64itTask\x12\x05.Task\x1a\x05.Task\x12+\n\tlistTasks\x12\x16.google.protobuf.Empty\x1a\x06.Tasksb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ntask.proto\x1a\x19google/protobuf/any.proto\x1a\x19google/protobuf/api.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a$google/protobuf/source_context.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/protobuf/type.proto\x1a\x1egoogle/protobuf/wrappers.proto\"B\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x19\n\x05state\x18\x03 \x01(\x0e\x32\n.TaskState\")\n\tTaskQuery\x12\x1c\n\x08selected\x18\x01 \x03(\x0e\x32\n.TaskState\"\x1f\n\x05Tasks\x12\x16\n\x07pending\x18\x01 \x03(\x0b\x32\x05.Task*M\n\tTaskState\x12\x08\n\x04OPEN\x10\x00\x12\x0c\n\x08\x41SSIGNED\x10\x01\x12\x0f\n\x0bPROGRESSING\x10\x02\x12\x08\n\x04\x44ONE\x10\x03\x12\r\n\tCANCELLED\x10\x04\x32\xa4\x01\n\x07Taskapi\x12.\n\x07\x61\x64\x64Task\x12\x1c.google.protobuf.StringValue\x1a\x05.Task\x12.\n\x07\x64\x65lTask\x12\x1c.google.protobuf.UInt64Value\x1a\x05.Task\x12\x18\n\x08\x65\x64itTask\x12\x05.Task\x1a\x05.Task\x12\x1f\n\tlistTasks\x12\n.TaskQuery\x1a\x06.Tasksb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'task_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
+  _globals['_TASKSTATE']._serialized_start=468
+  _globals['_TASKSTATE']._serialized_end=545
   _globals['_TASK']._serialized_start=324
-  _globals['_TASK']._serialized_end=363
-  _globals['_TASKS']._serialized_start=365
-  _globals['_TASKS']._serialized_end=396
-  _globals['_TASKAPI']._serialized_start=399
-  _globals['_TASKAPI']._serialized_end=575
+  _globals['_TASK']._serialized_end=390
+  _globals['_TASKQUERY']._serialized_start=392
+  _globals['_TASKQUERY']._serialized_end=433
+  _globals['_TASKS']._serialized_start=435
+  _globals['_TASKS']._serialized_end=466
+  _globals['_TASKAPI']._serialized_start=548
+  _globals['_TASKAPI']._serialized_end=712
 # @@protoc_insertion_point(module_scope)

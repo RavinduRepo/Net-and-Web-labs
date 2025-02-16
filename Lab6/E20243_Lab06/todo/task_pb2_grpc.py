@@ -3,11 +3,10 @@
 import grpc
 import warnings
 
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 import task_pb2 as task__pb2
 
-GRPC_GENERATED_VERSION = '1.70.0'
+GRPC_GENERATED_VERSION = '1.69.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -28,8 +27,7 @@ if _version_not_supported:
 
 
 class TaskapiStub(object):
-    """Task service API 
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
         """Constructor.
@@ -38,30 +36,29 @@ class TaskapiStub(object):
             channel: A grpc.Channel.
         """
         self.addTask = channel.unary_unary(
-                '/Taskapi/addTask',
+                '/todo.Taskapi/addTask',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
                 response_deserializer=task__pb2.Task.FromString,
                 _registered_method=True)
         self.delTask = channel.unary_unary(
-                '/Taskapi/delTask',
+                '/todo.Taskapi/delTask',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.UInt64Value.SerializeToString,
                 response_deserializer=task__pb2.Task.FromString,
                 _registered_method=True)
         self.editTask = channel.unary_unary(
-                '/Taskapi/editTask',
+                '/todo.Taskapi/editTask',
                 request_serializer=task__pb2.Task.SerializeToString,
                 response_deserializer=task__pb2.Task.FromString,
                 _registered_method=True)
         self.listTasks = channel.unary_unary(
-                '/Taskapi/listTasks',
-                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                '/todo.Taskapi/listTasks',
+                request_serializer=task__pb2.TaskQuery.SerializeToString,
                 response_deserializer=task__pb2.Tasks.FromString,
                 _registered_method=True)
 
 
 class TaskapiServicer(object):
-    """Task service API 
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def addTask(self, request, context):
         """Add a new task and return its id
@@ -85,7 +82,7 @@ class TaskapiServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def listTasks(self, request, context):
-        """List all tasks
+        """List all tasks in the given states
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -111,20 +108,19 @@ def add_TaskapiServicer_to_server(servicer, server):
             ),
             'listTasks': grpc.unary_unary_rpc_method_handler(
                     servicer.listTasks,
-                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    request_deserializer=task__pb2.TaskQuery.FromString,
                     response_serializer=task__pb2.Tasks.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'Taskapi', rpc_method_handlers)
+            'todo.Taskapi', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('Taskapi', rpc_method_handlers)
+    server.add_registered_method_handlers('todo.Taskapi', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
 class Taskapi(object):
-    """Task service API 
-    """
+    """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def addTask(request,
@@ -140,7 +136,7 @@ class Taskapi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Taskapi/addTask',
+            '/todo.Taskapi/addTask',
             google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
             task__pb2.Task.FromString,
             options,
@@ -167,7 +163,7 @@ class Taskapi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Taskapi/delTask',
+            '/todo.Taskapi/delTask',
             google_dot_protobuf_dot_wrappers__pb2.UInt64Value.SerializeToString,
             task__pb2.Task.FromString,
             options,
@@ -194,7 +190,7 @@ class Taskapi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Taskapi/editTask',
+            '/todo.Taskapi/editTask',
             task__pb2.Task.SerializeToString,
             task__pb2.Task.FromString,
             options,
@@ -221,8 +217,8 @@ class Taskapi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Taskapi/listTasks',
-            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            '/todo.Taskapi/listTasks',
+            task__pb2.TaskQuery.SerializeToString,
             task__pb2.Tasks.FromString,
             options,
             channel_credentials,

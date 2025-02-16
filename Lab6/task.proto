@@ -10,6 +10,14 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/type.proto";
 import "google/protobuf/wrappers.proto";
 
+enum TaskState {
+    OPEN = 0;
+    ASSIGNED = 1;
+    PROGRESSING = 2;
+    DONE = 3;
+    CANCELLED = 4;
+}
+
 /* Task service API */
 service Taskapi {
     // Add a new task and return its id
@@ -19,12 +27,18 @@ service Taskapi {
     // Edit an existing task (ignoring write conflicts)
     rpc editTask(Task) returns (Task);
     // List all tasks
-    rpc listTasks (google.protobuf.Empty) returns (Tasks);
+    rpc listTasks (TaskQuery) returns (Tasks);
 }
 
+/* Each field is numbered(their tag to identify in binary) */
 message Task {
     uint64 id = 1;
     string description = 2;
+    TaskState state = 3; // Add state field
+}
+
+message TaskQuery {
+    repeated TaskState selected = 1; // Add TaskQuery message
 }
 
 message Tasks {
