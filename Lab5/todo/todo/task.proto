@@ -22,6 +22,7 @@ service Taskapi {
     rpc listTasks (google.protobuf.Empty) returns (Tasks);
 }
 
+/* Each field is numbered(their tag to identify in binary) */
 message Task {
     uint64 id = 1;
     string description = 2;
