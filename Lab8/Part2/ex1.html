@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation</title>
+</head>
+<body>
+    <h2>DOM Manipulation Exercise</h2>
+    <div id="content">Click the button to change me!</div>
+    <button id="changeButton">Change Text & Color</button>
+    
+    <label for="colorSelect">Choose a background color:</label>
+    <select id="colorSelect">
+        <option value="lightblue">Light Blue</option>
+        <option value="lightgreen">Light Green</option>
+        <option value="lightcoral">Light Coral</option>
+        <option value="lightgoldenrodyellow">Light Yellow</option>
+    </select>
+
+    <script>
+        const contentDiv = document.getElementById("content");
+        const changeButton = document.getElementById("changeButton");
+        const colorSelect = document.getElementById("colorSelect");
+
+        changeButton.addEventListener("click", function() {
+            contentDiv.textContent = "Content Updated!";
+            contentDiv.style.backgroundColor = "lightgray";
+        });
+
+        colorSelect.addEventListener("change", function() {
+            contentDiv.style.backgroundColor = colorSelect.value;
+        });
+    </script>
+</body>
+</html>

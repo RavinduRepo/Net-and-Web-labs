@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling</title>
+</head>
+<body>
+    <h2>Event Handling Exercise</h2>
+    <input type="text" id="userInput" placeholder="Type something...">
+    <button id="clearButton">Clear</button>
+    <p>Real-time Input: <span id="displayText"></span></p>
+
+    <script>
+        const inputField = document.getElementById("userInput");
+        const clearButton = document.getElementById("clearButton");
+        const displayText = document.getElementById("displayText");
+
+        inputField.addEventListener("input", function() {
+            console.log(inputField.value);
+            displayText.textContent = inputField.value;
+        });
+
+        clearButton.addEventListener("click", function() {
+            inputField.value = "";
+            displayText.textContent = "";
+        });
+    </script>
+</body>
+</html>

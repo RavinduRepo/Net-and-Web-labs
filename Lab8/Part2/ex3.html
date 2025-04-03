@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List with Local Storage</title>
+</head>
+<body>
+    <h2>To-Do List</h2>
+    <input type="text" id="todoInput" placeholder="Enter a task">
+    <button id="addButton">Add</button>
+    <button id="clearAll">Clear All</button>
+    <ul id="todoList"></ul>
+
+    <script>
+        const inputField = document.getElementById("todoInput");
+        const addButton = document.getElementById("addButton");
+        const clearAllButton = document.getElementById("clearAll");
+        const todoList = document.getElementById("todoList");
+
+        function loadTodos() {
+            const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+            savedTodos.forEach(todo => addTodoToList(todo));
+        }
+
+        function addTodoToList(todo) {
+            const li = document.createElement("li");
+            li.textContent = todo;
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.onclick = function() {
+                li.remove();
+                saveTodos();
+            };
+            li.appendChild(removeButton);
+            todoList.appendChild(li);
+        }
+
+        function saveTodos() {
+            const todos = Array.from(todoList.children).map(li => li.firstChild.textContent);
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+
+        addButton.addEventListener("click", function() {
+            const todo = inputField.value.trim();
+            if (todo) {
+                addTodoToList(todo);
+                saveTodos();
+                inputField.value = "";
+            }
+        });
+
+        clearAllButton.addEventListener("click", function() {
+            localStorage.removeItem("todos");
+            todoList.innerHTML = "";
+        });
+
+        window.addEventListener("load", loadTodos);
+    </script>
+</body>
+</html>

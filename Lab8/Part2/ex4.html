@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API for AJAX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #joke {
+            font-size: 1.9em;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Random Joke</h2>
+    <button id="fetchJokeButton">Get a Joke</button>
+    <p id="joke">Click the "Get a joke" button to fetch a joke,</p>
+
+    <script>
+        const fetchJokeButton = document.getElementById("fetchJokeButton");
+        const jokeElement = document.getElementById("joke");
+
+        fetchJokeButton.addEventListener("click", function() {
+            fetch("https://official-joke-api.appspot.com/jokes/random")
+                .then(response => response.json())
+                .then(data => {
+                    jokeElement.textContent = `${data.setup} - ${data.punchline}`;
+                })
+                .catch(error => {
+                    jokeElement.textContent = "ERror occured. Please try again.";
+                });
+        });
+    </script>
+</body>
+</html>
